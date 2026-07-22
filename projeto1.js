@@ -10,7 +10,9 @@ function mostrarMenu() {
     console.log("======= SISTEMA DE ALUNOS =======");
     console.log("1 - Cadastrar Aluno");
     console.log("2 - Listar Alunos");
-    console.log("3 - Sair");
+    console.log("3 - Buscar Alunos");
+    console.log("4 - Mostrar alunos Aprovados");
+    console.log("5 - Sair");
 
     rl.question("Escolha uma opção: ", function (opcao) {
         switch (Number(opcao)) {
@@ -21,6 +23,12 @@ function mostrarMenu() {
                 listarAlunos();
                 break;
             case 3:
+                buscarAluno();
+                break;
+            case 4:
+                mostrarAprovados();
+                break;
+            case 5:
                 console.log("Até logo!");
                 rl.close();
                 break;
@@ -64,6 +72,56 @@ function listarAlunos(){
         let media = (alunos[i].nota1 + alunos[i].nota2) / 2;
         console.log("Média: ", media);
     }
+    mostrarMenu();
+}
+function buscarAluno() {
+    rl.question("Digite o nome do aluno: ", function(nome) {
+
+        let aluno = alunos.find(function(aluno) {
+            return aluno.nome === nome;
+        });
+
+        if (aluno) {
+            console.log("\n=== ALUNO ENCONTRADO ===");
+            console.log("Nome:", aluno.nome);
+            console.log("Nota 1:", aluno.nota1);
+            console.log("Nota 2:", aluno.nota2);
+
+            let media = (aluno.nota1 + aluno.nota2) / 2;
+            console.log("Média:", media);
+
+            if (media >= 7) {
+                console.log("Situação: Aprovado");
+            } else {
+                console.log("Situação: Reprovado");
+            }
+
+        } else {
+            console.log("Aluno não encontrado.");
+        }
+
+        mostrarMenu();
+    });
+}
+function mostrarAprovados() {
+
+    let aprovados = alunos.filter(function(aluno) {
+
+        let media = (aluno.nota1 + aluno.nota2) / 2;
+
+        return media >= 7;
+
+    });
+
+    console.log("\n=== ALUNOS APROVADOS ===");
+
+    if (aprovados.length === 0) {
+        console.log("Nenhum aluno aprovado.");
+    }else {
+        aprovados.forEach(function(aluno) {
+            console.log(aluno.nome);
+        });
+        }
     mostrarMenu();
 }
 mostrarMenu();
