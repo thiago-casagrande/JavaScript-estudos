@@ -12,7 +12,9 @@ function mostrarMenu() {
     console.log("2 - Listar Alunos");
     console.log("3 - Buscar Alunos");
     console.log("4 - Mostrar alunos Aprovados");
-    console.log("5 - Sair");
+    console.log("5 - Editar aluno");
+    console.log("6 - Remover aluno");
+    console.log("7 - Sair");
 
     rl.question("Escolha uma opção: ", function (opcao) {
         switch (Number(opcao)) {
@@ -29,6 +31,12 @@ function mostrarMenu() {
                 mostrarAprovados();
                 break;
             case 5:
+                editarAluno();
+                break;
+            case 6:
+                removerAluno();
+                break;
+            case 7:
                 console.log("Até logo!");
                 rl.close();
                 break;
@@ -124,4 +132,48 @@ function mostrarAprovados() {
         }
     mostrarMenu();
 }
-mostrarMenu();
+function editarAluno() {
+    rl.question("Nome do aluno: ", function(nome) {
+
+        let indice = alunos.findIndex(function(aluno) {
+            return aluno.nome === nome;
+        });
+
+        if (indice === -1) {
+            console.log("Aluno não encontrado.");
+            mostrarMenu();
+            return;
+        }
+
+        rl.question("Nova Nota 1: ", function(nota1) {
+            rl.question("Nova nota 2: ", function(nota2) {
+
+                alunos[indice].nota1 = Number(nota1);
+                alunos[indice].nota2 = Number(nota2);
+            
+                console.log("Aluno editado com sucesso!");
+                mostrarMenu();
+
+            });
+        });
+    });
+}
+function removerAluno() {
+    rl.question("Qual aluno deseja remover: ", function(nome) {
+        
+        let indice = alunos.findIndex(function(nome) {
+            return aluno.nome === nome;
+        });
+        if (indice, 1) {
+            console.log("Aluno não encontrado.");
+            return
+            mostrarMenu();
+        }
+
+        alunos.splice(indice, 1);
+
+        console.log("Aluno removido com sucesso");
+        mostrarMenu();
+    });
+}
+    mostrarMenu();
